@@ -1,22 +1,22 @@
 function getModels(sequelize) {
-  return {
-    // AttributeValue
-    // AttributeValue: sequelize.import('./attribute_value'),
-    // Attribute: sequelize.import('./attribute'),
-    // Audit: sequelize.import('./audit'),
-    // Category: sequelize.import('./category'),
-    Customer: sequelize.import('../models/customer'),
-    // Department: sequelize.import('./deparment'),
-    // OrderDetail: sequelize.import('./order_detail'),
-    // Orders: sequelize.import('./orders'),
-    // ProductAttribute: sequelize.import('./product_attribute'),
-    // ProductCategory: sequelize.import('./product_category'),
-    // Product: sequelize.import('./product'),
-    // Review: sequelize.import('./review'),
-    // ShippingRegion: sequelize.import('./shipping_region'),
-    // ShoppingCart: sequelize.import('./shopping_cart'),
-    // Tax: sequelize.import('./tax')
-  };
+	return {
+		// AttributeValue
+		// AttributeValue: sequelize.import(../models/attribute_value'),
+		// Attribute: sequelize.import(../models/attribute'),
+		// Audit: sequelize.import(../models/audit'),
+		// Category: sequelize.import(../models/category'),
+		Customer: sequelize.import('../models/customer'),
+		// Department: sequelize.import(../models/deparment'),
+		// OrderDetail: sequelize.import(../models/order_detail'),
+		// Orders: sequelize.import(../models/orders'),
+		// ProductAttribute: sequelize.import(../models/product_attribute'),
+		// ProductCategory: sequelize.import(../models/product_category'),
+		// Product: sequelize.import(../models/product'),
+		// Review: sequelize.import(../models/review'),
+		ShippingRegion: sequelize.import('../models/shipping_region')
+		// ShoppingCart: sequelize.import(../models/shopping_cart'),
+		// Tax: sequelize.import(../models/tax')
+	};
 }
 
 module.exports = { getModels };

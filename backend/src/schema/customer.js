@@ -19,7 +19,7 @@ export default gql`
 	}
 
 	type Customer {
-		customer_id: Int!
+		customer_id: ID!
 		name: String!
 		email: String!
 		password: String!
@@ -30,7 +30,7 @@ export default gql`
 		region: String
 		postal_code: String
 		country: String
-		shipping_region_id: String!
+		shipping_region_id: Int!
 		day_phone: String
 		eve_phone: String
 		mob_phone: String

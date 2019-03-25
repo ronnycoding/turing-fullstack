@@ -1,4 +1,5 @@
 import Sequelize from 'sequelize';
+import setModelsRelation from './relations';
 
 import { getModels } from './models';
 
@@ -21,7 +22,7 @@ const sequelize = new Sequelize(database, username, password, {
 	}
 });
 
-const models = getModels(sequelize);
+const models = setModelsRelation(getModels(sequelize));
 
 Object.keys(models).forEach(modelName => {
 	if ('associate' in models[modelName]) {
