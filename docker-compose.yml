@@ -1,0 +1,38 @@
+version: '3.1'
+services:
+  database:
+    build: ./database
+    restart: always
+    ports:
+      - 3307:3306
+    volumes:
+      - ./db-data/:/var/lib/mysql
+    # labels:
+    #   - 'traefik.enable=false'
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    links:
+      - database
+    # labels:
+    #   - 'traefik.backend=adminer-${DOMAIN}'
+    #   - 'traefik.frontend.rule=Host:adminer.${DOMAIN}.localhost'
+    #   - 'traefik.port=8080'
+  
+  backend:
+    build: ./backend
+    env_file: ./backend/.env
+    volumes:
+      - /var/www/app/node_modules
+      - ./backend:/var/www/app
+    depends_on:
+      - database
+    ports:
+      - 4000:4000
+    # labels:
+    #   - 'traefik.backend=backend-${DOMAIN}'
+    #   - 'traefik.frontend.rule=Host:backend.${DOMAIN}.localhost'
+    #   - 'traefik.port=80'
