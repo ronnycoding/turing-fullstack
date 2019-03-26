@@ -2,6 +2,8 @@ FROM node:10.15.3-alpine
 
 EXPOSE 3000
 
+RUN apk --no-cache add --virtual builds-deps build-base python
+
 RUN yarn global add nodemon sequelize-auto mysql
 
 ADD ./start.sh /start.sh

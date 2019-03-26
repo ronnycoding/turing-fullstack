@@ -1,6 +1,7 @@
 FROM mariadb:latest
 
 ADD ./tshirtshop.sql /docker-entrypoint-initdb.d/tshirtshop.sql
+ADD ./zaltertable.sql /docker-entrypoint-initdb.d/zaltertable.sql
 
 ENV MYSQL_ROOT_PASSWORD turing
 ENV MYSQL_DATABASE turing

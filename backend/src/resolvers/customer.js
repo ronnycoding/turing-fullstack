@@ -64,9 +64,9 @@ export default {
 			return { token: createToken(customer, secret, '30m') };
 		},
 
-		updateCustomer: combineResolvers(isAuthenticated, async (parent, { name }, { models, me }) => {
+		updateCustomer: combineResolvers(isAuthenticated, async (parent, args, { models, me }) => {
 			const customer = await models.Customer.findById(me.customer_id);
-			return await customer.update({ name });
+			return await customer.update({ ...args });
 		}),
 
 		deleteCustomer: combineResolvers(

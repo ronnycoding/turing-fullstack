@@ -1,0 +1,1 @@
+ALTER TABLE `customer` MODIFY `password` VARCHAR(60) NOT NULL;

@@ -9,8 +9,22 @@ export default gql`
 
 	extend type Mutation {
 		signUp(name: String!, email: String!, password: String!): Token!
-		signIn(email: String!, password: String!): Token!
-		updateCustomer(name: String!): Customer!
+		signIn(login: String!, password: String!): Token!
+		updateCustomer(
+			name: String
+			email: String
+			password: String
+			credit_card: String
+			address_1: String
+			address_2: String
+			city: String
+			region: String
+			postal_code: String
+			country: String
+			day_phone: String
+			eve_phone: String
+			mob_phone: String
+		): Customer!
 		deleteCustomer(customer_id: ID!): Boolean!
 	}
 
