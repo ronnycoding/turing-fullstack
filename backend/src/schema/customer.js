@@ -44,7 +44,7 @@ export default gql`
 		region: String
 		postal_code: String
 		country: String
-		shipping_region_id: Int!
+		shipping_region_id: ID!
 		day_phone: String
 		eve_phone: String
 		mob_phone: String

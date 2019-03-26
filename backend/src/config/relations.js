@@ -1,14 +1,14 @@
 import bcrypt from 'bcrypt';
 
 export default function setModelsRelation(models) {
-	const { Customer, ShippingRegion } = models;
+	const { Customer, ShippingRegion, Attribute, AttributeValue } = models;
 
-	Customer.associate = (models) => {
+	Customer.associate = models => {
 		models.Customer.belongsTo(ShippingRegion, {
 			as: 'ShippingRegion',
 			foreignKey: 'shipping_region_id'
 		});
-	}
+	};
 
 	Customer.findByLogin = async login => {
 		let customer = await Customer.findOne({
@@ -37,14 +37,30 @@ export default function setModelsRelation(models) {
 		return await bcrypt.compare(password, this.password);
 	};
 
-	ShippingRegion.associate = (models) => {
+	ShippingRegion.associate = models => {
 		models.ShippingRegion.hasMany(Customer, {
 			foreignKey: 'shipping_region_id'
 		});
-	}
+	};
+
+	Attribute.associate = models => {
+		models.Attribute.hasMany(AttributeValue, {
+			as: 'AttributeValue',
+			foreignKey: 'attribute_id'
+		});
+	};
+
+	AttributeValue.associate = models => {
+		models.AttributeValue.belongsTo(Attribute, {
+			as: 'Attribute',
+			foreignKey: 'attribute_id'
+		});
+	};
 
 	return {
 		Customer,
-		ShippingRegion
+		ShippingRegion,
+		Attribute,
+		AttributeValue
 	};
 }
