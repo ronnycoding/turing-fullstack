@@ -1,8 +1,11 @@
 import { gql } from 'apollo-server-express';
 import customerSchema from './customer';
 import chippingRegionSchema from './shipping_region';
-import AttributeRegionSchema from './attribute';
-import AttributeValueSchema from './attribute_value';
+import attributeRegionSchema from './attribute';
+import attributeValueSchema from './attribute_value';
+import departmentSchema from './department';
+import categorySchema from './category';
+import productSchema from './product';
 
 const linkSchema = gql`
 	scalar Date
@@ -20,4 +23,13 @@ const linkSchema = gql`
 	}
 `;
 
-export default [linkSchema, customerSchema, chippingRegionSchema, AttributeRegionSchema, AttributeValueSchema];
+export default [
+	linkSchema,
+	customerSchema,
+	chippingRegionSchema,
+	attributeRegionSchema,
+	attributeValueSchema,
+	departmentSchema,
+	categorySchema,
+	productSchema
+];
