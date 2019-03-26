@@ -1,16 +1,7 @@
 import bcrypt from 'bcrypt';
 
 export default function setModelsRelation(models) {
-	const {
-		Customer,
-		ShippingRegion,
-		Attribute,
-		AttributeValue,
-		Department,
-		Category,
-		Product,
-		ProductCategory
-	} = models;
+	const { Customer, ShippingRegion, Attribute, AttributeValue, Department, Category, Product } = models;
 
 	Customer.associate = models => {
 		models.Customer.belongsTo(ShippingRegion, {

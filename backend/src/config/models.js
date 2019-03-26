@@ -9,7 +9,7 @@ function getModels(sequelize) {
 		Department: sequelize.import('../models/department'),
 		// OrderDetail: sequelize.import('../models/order_detail'),
 		// Orders: sequelize.import('../models/orders'),
-		// ProductAttribute: sequelize.import('../models/product_attribute'),
+		ProductAttribute: sequelize.import('../models/product_attribute'),
 		ProductCategory: sequelize.import('../models/product_category'),
 		Product: sequelize.import('../models/product'),
 		// Review: sequelize.import('../models/review'),

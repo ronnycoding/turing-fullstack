@@ -19,6 +19,22 @@ export default {
 					product_id: productIds
 				}
 			});
+		},
+		getProductsByAttributeValueId: async (parent, { attribute_value_id }, { models }) => {
+			const attributeValueProducts =
+				(await models.ProductAttribute.findAll({
+					where: {
+						attribute_value_id
+					}
+				})) || [];
+
+			const productIds = attributeValueProducts.map(({ product_id }) => product_id);
+
+			return await models.Product.findAll({
+				where: {
+					product_id: productIds
+				}
+			});
 		}
 	}
 };

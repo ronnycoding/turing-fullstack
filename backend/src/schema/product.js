@@ -4,7 +4,8 @@ export default gql`
 	extend type Query {
 		products: [Product!]
 		product(product_id: ID!): Product
-		getProductsByCategoryId(category_id: ID!): [Product!]
+		getProductsByCategoryId(category_id: ID!): [Product]
+		getProductsByAttributeValueId(attribute_value_id: ID!): [Product]
 	}
 
 	type Product {

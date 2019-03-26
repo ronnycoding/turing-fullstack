@@ -7,6 +7,22 @@ export default {
 		getAttributeValuesByAttributeId: async (parent, { attribute_id }, { models }) => {
 			const attribute = await models.Attribute.findByPk(attribute_id);
 			return await attribute.getAttributeValue();
+		},
+		getAttributeValuesByProductId: async (parent, { product_id }, { models }) => {
+			const ProductAttributeValues =
+				(await models.ProductAttribute.findAll({
+					where: {
+						product_id
+					}
+				})) || [];
+
+			const attributeValueIds = ProductAttributeValues.map(({ attribute_value_id }) => attribute_value_id);
+
+			return await models.AttributeValue.findAll({
+				where: {
+					attribute_value_id: attributeValueIds
+				}
+			});
 		}
 	}
 };

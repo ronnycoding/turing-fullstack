@@ -5,6 +5,7 @@ export default gql`
 		attribute_values: [AttributeValue!]
 		attribute_value(attribute_value_id: ID!): AttributeValue
 		getAttributeValuesByAttributeId(attribute_id: ID!): [AttributeValue]
+		getAttributeValuesByProductId(product_id: ID!): [AttributeValue]
 	}
 
 	type AttributeValue {
