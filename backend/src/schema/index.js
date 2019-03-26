@@ -8,6 +8,7 @@ import productCategorySchema from './product_category';
 import categorySchema from './category';
 import productSchema from './product';
 import productAttributeSchema from './product_attribute';
+import ShippingSchema from './shipping';
 
 const linkSchema = gql`
 	scalar Date
@@ -35,5 +36,6 @@ export default [
 	productCategorySchema,
 	categorySchema,
 	productSchema,
-	productAttributeSchema
+	productAttributeSchema,
+	ShippingSchema
 ];

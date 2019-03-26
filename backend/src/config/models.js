@@ -13,7 +13,8 @@ function getModels(sequelize) {
 		ProductCategory: sequelize.import('../models/product_category'),
 		Product: sequelize.import('../models/product'),
 		// Review: sequelize.import('../models/review'),
-		ShippingRegion: sequelize.import('../models/shipping_region')
+		ShippingRegion: sequelize.import('../models/shipping_region'),
+		Shipping: sequelize.import('../models/shipping')
 		// ShoppingCart: sequelize.import('../models/shopping_cart'),
 		// Tax: sequelize.import('../models/tax')
 	};

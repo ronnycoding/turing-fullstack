@@ -8,6 +8,7 @@ import attributeValueResolver from './attribute_value';
 import departmentResolver from './department';
 import categoryResolver from './category';
 import productResolver from './product';
+import shippingResolver from './shipping';
 
 const customScalarResolver = {
 	Date: GraphQLDateTime
@@ -21,7 +22,8 @@ const types = [
 	attributeValueResolver,
 	departmentResolver,
 	categoryResolver,
-	productResolver
+	productResolver,
+	shippingResolver
 ];
 
 export default mergeResolvers(types);
