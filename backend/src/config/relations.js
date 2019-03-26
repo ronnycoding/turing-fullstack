@@ -1,12 +1,27 @@
 import bcrypt from 'bcrypt';
 
 export default function setModelsRelation(models) {
-	const { Customer, ShippingRegion, Attribute, AttributeValue, Department, Category, Product, Shipping } = models;
+	const {
+		Customer,
+		ShippingRegion,
+		Attribute,
+		AttributeValue,
+		Department,
+		Category,
+		Product,
+		Shipping,
+		Review
+	} = models;
 
 	Customer.associate = models => {
 		models.Customer.belongsTo(ShippingRegion, {
 			as: 'ShippingRegion',
 			foreignKey: 'shipping_region_id'
+		});
+
+		models.Customer.hasMany(Review, {
+			as: 'Reviews',
+			foreignKey: 'customer_id'
 		});
 	};
 
@@ -82,18 +97,34 @@ export default function setModelsRelation(models) {
 		// });
 	};
 
-	// Product.associate = models => {
-	// 	models.Product.belongsTo(Category, {
-	// 		through: ProductCategory,
-	// 		foreignKey: 'product_id',
-	// 		as: 'Category'
-	// 	});
-	// };
+	Product.associate = models => {
+		// models.Product.belongsTo(Category, {
+		// 	through: ProductCategory,
+		// 	foreignKey: 'product_id',
+		// 	as: 'Category'
+		// });
+		models.Product.hasMany(Review, {
+			as: 'Reviews',
+			foreignKey: 'product_id'
+		});
+	};
 
 	Shipping.associate = models => {
 		models.Shipping.belongsTo(ShippingRegion, {
 			as: 'ShippingRegion',
 			foreignKey: 'shipping_region_id'
+		});
+	};
+
+	Review.associate = models => {
+		models.Review.belongsTo(Customer, {
+			as: 'Customer',
+			foreignKey: 'customer_id'
+		});
+
+		models.Review.belongsTo(Product, {
+			as: 'Product',
+			foreignKey: 'product_id'
 		});
 	};
 
@@ -105,6 +136,7 @@ export default function setModelsRelation(models) {
 		AttributeValue,
 		Department,
 		Category,
-		Product
+		Product,
+		Review
 	};
 }
