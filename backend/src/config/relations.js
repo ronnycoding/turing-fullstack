@@ -1,7 +1,16 @@
 import bcrypt from 'bcrypt';
 
 export default function setModelsRelation(models) {
-	const { Customer, ShippingRegion, Attribute, AttributeValue, Department, Category } = models;
+	const {
+		Customer,
+		ShippingRegion,
+		Attribute,
+		AttributeValue,
+		Department,
+		Category,
+		Product,
+		ProductCategory
+	} = models;
 
 	Customer.associate = models => {
 		models.Customer.belongsTo(ShippingRegion, {
@@ -69,7 +78,21 @@ export default function setModelsRelation(models) {
 			as: 'Department',
 			foreignKey: 'department_id'
 		});
+
+		// models.Category.belongsToMany(Product, {
+		// 	through: ProductCategory,
+		// 	foreignKey: 'category_id',
+		// 	as: 'Products'
+		// });
 	};
+
+	// Product.associate = models => {
+	// 	models.Product.belongsTo(Category, {
+	// 		through: ProductCategory,
+	// 		foreignKey: 'product_id',
+	// 		as: 'Category'
+	// 	});
+	// };
 
 	return {
 		...models,
@@ -78,6 +101,7 @@ export default function setModelsRelation(models) {
 		Attribute,
 		AttributeValue,
 		Department,
-		Category
+		Category,
+		Product
 	};
 }

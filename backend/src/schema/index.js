@@ -4,6 +4,7 @@ import chippingRegionSchema from './shipping_region';
 import attributeRegionSchema from './attribute';
 import attributeValueSchema from './attribute_value';
 import departmentSchema from './department';
+import productCategorySchema from './product_category';
 import categorySchema from './category';
 import productSchema from './product';
 
@@ -30,6 +31,7 @@ export default [
 	attributeRegionSchema,
 	attributeValueSchema,
 	departmentSchema,
+	productCategorySchema,
 	categorySchema,
 	productSchema
 ];
