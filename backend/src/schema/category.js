@@ -5,6 +5,7 @@ export default gql`
 		categories: [Category!]
 		category(category_id: ID!): Category
 		getCategoriesByDeparmentId(department_id: ID!): [Category!]
+		getCategoryByProductId(product_id: ID!): Category
 	}
 
 	type Category {
