@@ -10,7 +10,11 @@ export default function setModelsRelation(models) {
 		Category,
 		Product,
 		Shipping,
-		Review
+		Review,
+		Order,
+		Tax,
+		OrderDetail,
+		ShoppingCart
 	} = models;
 
 	Customer.associate = models => {
@@ -21,6 +25,11 @@ export default function setModelsRelation(models) {
 
 		models.Customer.hasMany(Review, {
 			as: 'Reviews',
+			foreignKey: 'customer_id'
+		});
+
+		models.Customer.hasMany(Order, {
+			as: 'Orders',
 			foreignKey: 'customer_id'
 		});
 	};
@@ -107,12 +116,27 @@ export default function setModelsRelation(models) {
 			as: 'Reviews',
 			foreignKey: 'product_id'
 		});
+
+		models.Product.hasMany(OrderDetail, {
+			as: 'OrderDetails',
+			foreignKey: 'product_id'
+		});
+
+		models.Product.hasMany(ShoppingCart, {
+			as: 'ShoppingCart',
+			foreignKey: 'product_id'
+		});
 	};
 
 	Shipping.associate = models => {
 		models.Shipping.belongsTo(ShippingRegion, {
 			as: 'ShippingRegion',
 			foreignKey: 'shipping_region_id'
+		});
+
+		models.Shipping.hasMany(Order, {
+			as: 'Orders',
+			foreignKey: 'shipping_id'
 		});
 	};
 
@@ -128,6 +152,54 @@ export default function setModelsRelation(models) {
 		});
 	};
 
+	Order.associate = models => {
+		models.Order.belongsTo(Customer, {
+			as: 'Customer',
+			foreignKey: 'customer_id'
+		});
+
+		models.Order.belongsTo(Shipping, {
+			as: 'Shipping',
+			foreignKey: 'shipping_id'
+		});
+
+		models.Order.belongsTo(Tax, {
+			as: 'Tax',
+			foreignKey: 'tax_id'
+		});
+
+		models.Order.hasMany(OrderDetail, {
+			as: 'OrderDetail',
+			foreignKey: 'order_id'
+		});
+	};
+
+	Tax.associate = models => {
+		models.Tax.hasMany(Order, {
+			as: 'Orders',
+			foreignKey: 'tax_id'
+		});
+	};
+
+	OrderDetail.associate = models => {
+		models.OrderDetail.belongsTo(Order, {
+			as: 'Order',
+			foreignKey: 'order_id'
+		});
+
+		models.OrderDetail.belongsTo(Product, {
+			as: 'Product',
+			foreignKey: 'product_id'
+		});
+	};
+
+	ShoppingCart.associate = models => {
+		models.ShoppingCart.belongsTo(Product, {
+			as: 'Product',
+			foreignKey: 'product_id'
+		});
+	};
+
 	return {
 		...models,
 		Customer,
@@ -137,6 +209,10 @@ export default function setModelsRelation(models) {
 		Department,
 		Category,
 		Product,
-		Review
+		Review,
+		Order,
+		Tax,
+		OrderDetail,
+		ShoppingCart
 	};
 }

@@ -10,22 +10,30 @@ import categoryResolver from './category';
 import productResolver from './product';
 import shippingResolver from './shipping';
 import reviewResolver from './review';
+import orderResolver from './order';
+import taxResolver from './tax';
+import orderDetailsResolver from './order_detail';
+import shoppingCartResolver from './shopping_cart';
 
 const customScalarResolver = {
-	Date: GraphQLDateTime
+  Date: GraphQLDateTime,
 };
 
 const types = [
-	customScalarResolver,
-	customerResolver,
-	shippingRegionResolver,
-	attributeResolver,
-	attributeValueResolver,
-	departmentResolver,
-	categoryResolver,
-	productResolver,
-	shippingResolver,
-	reviewResolver
+  customScalarResolver,
+  customerResolver,
+  shippingRegionResolver,
+  attributeResolver,
+  attributeValueResolver,
+  departmentResolver,
+  categoryResolver,
+  productResolver,
+  shippingResolver,
+  reviewResolver,
+  orderResolver,
+  taxResolver,
+  orderDetailsResolver,
+  shoppingCartResolver,
 ];
 
 export default mergeResolvers(types);

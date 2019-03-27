@@ -10,6 +10,10 @@ import productSchema from './product';
 import productAttributeSchema from './product_attribute';
 import ShippingSchema from './shipping';
 import reviewSchema from './review';
+import orderSchema from './order';
+import taxSchema from './tax';
+import orderDetailsSchema from './order_detail';
+import shoppingCartSchema from './shopping_cart';
 
 const linkSchema = gql`
 	scalar Date
@@ -28,16 +32,20 @@ const linkSchema = gql`
 `;
 
 export default [
-	linkSchema,
-	customerSchema,
-	chippingRegionSchema,
-	attributeRegionSchema,
-	attributeValueSchema,
-	departmentSchema,
-	productCategorySchema,
-	categorySchema,
-	productSchema,
-	productAttributeSchema,
-	ShippingSchema,
-	reviewSchema
+  linkSchema,
+  customerSchema,
+  chippingRegionSchema,
+  attributeRegionSchema,
+  attributeValueSchema,
+  departmentSchema,
+  productCategorySchema,
+  categorySchema,
+  productSchema,
+  productAttributeSchema,
+  ShippingSchema,
+  reviewSchema,
+  orderSchema,
+  taxSchema,
+  orderDetailsSchema,
+  shoppingCartSchema,
 ];

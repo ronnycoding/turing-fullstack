@@ -19,6 +19,6 @@ export default gql`
 		product_id: ID!
 		review: String!
 		rating: Int!
-		created_on: String!
+		created_on: Date!
 	}
 `;
