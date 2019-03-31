@@ -1,14 +1,30 @@
-FROM node:10.15.3-alpine
+FROM node:8.15.1-jessie
 
 EXPOSE 3000
 
-RUN apk --no-cache add --virtual builds-deps build-base python
+RUN set -ex; \
+  apt-get update; \
+  apt-get install -y --no-install-recommends \
+  python-pip \
+  curl
 
-RUN yarn global add nodemon sequelize-auto mysql
+RUN ln -sf /usr/share/zoneinfo/Etc/UTC /etc/localtime
 
-ADD ./start.sh /start.sh
+RUN pip install --upgrade pip; \
+  pip install awscli; \
+  pip install awscli --upgrade
+
+RUN yarn global add nodemon sequelize-auto mysql serverless
+
+RUN curl -sf https://up.apex.sh/install | BINDIR=/usr/local/bin/ sh \
+  && up version \
+  && up upgrade
+
+RUN chown -R $(whoami) /usr/local/bin/
 
 ADD ./.env /.env
+
+ADD ./start.sh /start.sh
 
 ADD ./package.json /var/www/app/package.json
 

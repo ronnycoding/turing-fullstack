@@ -1,22 +1,37 @@
-function getModels(sequelize) {
+import DataType from 'sequelize';
+import Attribute from '../models/attribute';
+import AttributeValue from '../models/attribute_value';
+import Category from '../models/category';
+import Customer from '../models/customer';
+import Department from '../models/department';
+import OrderDetail from '../models/order_detail';
+import Order from '../models/orders';
+import ProductAttribute from '../models/product_attribute';
+import ProductCategory from '../models/product_category';
+import Product from '../models/product';
+import Review from '../models/review';
+import ShippingRegion from '../models/shipping_region';
+import Shipping from '../models/shipping';
+import ShoppingCart from '../models/shopping_cart';
+import Tax from '../models/tax';
+
+export default function getModels(sequelize) {
 	return {
-		Attribute: sequelize.import('../models/attribute'),
-		AttributeValue: sequelize.import('../models/attribute_value'),
+		Attribute: Attribute(sequelize, DataType), // sequelize.import('../models/attribute'),
+		AttributeValue: AttributeValue(sequelize, DataType),
 		// Audit: sequelize.import('../models/audit'),
-		Category: sequelize.import('../models/category'),
-		Customer: sequelize.import('../models/customer'),
-		Department: sequelize.import('../models/department'),
-		OrderDetail: sequelize.import('../models/order_detail'),
-		Order: sequelize.import('../models/orders'),
-		ProductAttribute: sequelize.import('../models/product_attribute'),
-		ProductCategory: sequelize.import('../models/product_category'),
-		Product: sequelize.import('../models/product'),
-		Review: sequelize.import('../models/review'),
-		ShippingRegion: sequelize.import('../models/shipping_region'),
-		Shipping: sequelize.import('../models/shipping'),
-		ShoppingCart: sequelize.import('../models/shopping_cart'),
-		Tax: sequelize.import('../models/tax')
+		Category: Category(sequelize, DataType),
+		Customer: Customer(sequelize, DataType),
+		Department: Department(sequelize, DataType),
+		OrderDetail: OrderDetail(sequelize, DataType),
+		Order: Order(sequelize, DataType),
+		ProductAttribute: ProductAttribute(sequelize, DataType),
+		ProductCategory: ProductCategory(sequelize, DataType),
+		Product: Product(sequelize, DataType),
+		Review: Review(sequelize, DataType),
+		ShippingRegion: ShippingRegion(sequelize, DataType),
+		Shipping: Shipping(sequelize, DataType),
+		ShoppingCart: ShoppingCart(sequelize, DataType),
+		Tax: Tax(sequelize, DataType)
 	};
 }
-
-module.exports = { getModels };

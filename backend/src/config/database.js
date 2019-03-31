@@ -1,33 +1,32 @@
 import Sequelize from 'sequelize';
 import setModelsRelation from './relations';
 
-import { getModels } from './models';
+import getModels from './models';
+import ENV from './env';
 
-const database = process.env.DB_DATABASE;
-const username = process.env.DB_USER;
-const password = process.env.DB_PASSWORD;
-const host = process.env.DB_HOST;
-const dialect = process.env.DB_MACHINE;
+const database = ENV.DB_DATABASE;
+const username = ENV.DB_USER;
+const password = ENV.DB_PASSWORD;
 
 const sequelize = new Sequelize(database, username, password, {
-	host,
-	dialect,
-	define: {
-		defaultScope: {
-			attributes: {
-				exclude: ['createdAt', 'updatedAt']
-			}
-		},
-		timestamps: false
-	}
+  host: ENV.DB_HOST,
+  dialect: ENV.DB_MACHINE,
+  define: {
+    defaultScope: {
+      attributes: {
+        exclude: ['createdAt', 'updatedAt'],
+      },
+    },
+    timestamps: false,
+  },
 });
 
 const models = setModelsRelation(getModels(sequelize));
 
-Object.keys(models).forEach(modelName => {
-	if ('associate' in models[modelName]) {
-		models[modelName].associate(models);
-	}
+Object.keys(models).forEach((modelName) => {
+  if ('associate' in models[modelName]) {
+    models[modelName].associate(models);
+  }
 });
 
 export { sequelize };

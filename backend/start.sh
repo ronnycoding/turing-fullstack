@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 
 source .env
@@ -22,9 +22,10 @@ fi
 yarn --cwd /var/www/app install
 
 if [[ "$NODE_ENV" == "production" ]]; then
-	node /var/www/app/start.js
+	node /var/www/app/app-entry.js
 else
-	nodemon /var/www/app/start.js $PORT
+	# nodemon /var/www/app/app-entry.js $PORT
+	yarn --cwd $DIR sls offline start
 fi
   
 exec "$@"
