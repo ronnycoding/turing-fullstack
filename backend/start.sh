@@ -22,9 +22,9 @@ fi
 yarn --cwd /var/www/app install
 
 if [[ "$NODE_ENV" == "production" ]]; then
-	node /var/www/app/app-entry.js
+	yarn --cwd $DIR sls deploy -v
+	yarn --cwd $DIR sls offline start
 else
-	# nodemon /var/www/app/app-entry.js $PORT
 	yarn --cwd $DIR sls offline start
 fi
   

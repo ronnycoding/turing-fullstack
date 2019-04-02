@@ -4,8 +4,15 @@ plugins:
   - serverless-offline
 custom:
   webpack:
+    packager: yarn
     webpackConfig: ./webpack.config.js
     includeModules: true
+    webpackIncludeModules:
+      forceInclude:
+        - pg
+        - pg-hstore
+        - mariadb
+        - mysql2
   serverless-offline:
     host: 0.0.0.0
     babelOptions:
@@ -18,6 +25,15 @@ provider:
 functions:
   graphql:
     handler: index.handler
+    environment:
+      DEPLOY_DB_HOST: db-turing.cgtjekwuvtry.us-west-2.rds.amazonaws.com
+      DEPLOY_DB_DATABASE: dbturing
+      DEPLOY_DB_USER: turing
+      DEPLOY_DB_PASSWORD: passturing
+      DEPLOY_DB_PORT: 3306
+      SECRET: turing
+      DB_MACHINE: mariadb
+      NODE_ENV: production
     events:
       - http:
           path: graphql
