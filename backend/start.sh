@@ -1,8 +1,7 @@
 #!/bin/bash
 set -e
-
-source .env
 DIR="/var/www/app/src/models"
+DIR_PROJECT="/var/www/app"
 
 if [[ -z "$(ls -A $PWD | grep .env)" ]]; then
 	echo "no .env file found."
@@ -19,13 +18,8 @@ else
 		sleep 40 && sequelize-auto -h $DB_HOST -d $DB_DATABASE -u $DB_USER -x $DB_PASSWORD -p $DB_PORT --dialect $DB_MACHINE -o $DIR
 fi
 
-yarn --cwd /var/www/app install
+sudo yarn --cwd $DIR_PROJECT install
 
-if [[ "$NODE_ENV" == "production" ]]; then
-	yarn --cwd $DIR sls deploy -v
-	yarn --cwd $DIR sls offline start
-else
-	yarn --cwd $DIR sls offline start
-fi
+yarn --cwd $DIR_PROJECT sls offline start
   
 exec "$@"

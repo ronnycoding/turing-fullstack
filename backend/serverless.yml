@@ -1,18 +1,17 @@
-service: serverless-graphql
+service: turing-backend
 plugins:
   - serverless-webpack
   - serverless-offline
+  - serverless-dotenv-plugin
 custom:
   webpack:
     packager: yarn
     webpackConfig: ./webpack.config.js
-    includeModules: true
-    webpackIncludeModules:
+    includeModules:
+      packagePath: ./package.json
       forceInclude:
-        - pg
-        - pg-hstore
+        - sequelize
         - mariadb
-        - mysql2
   serverless-offline:
     host: 0.0.0.0
     babelOptions:
@@ -22,24 +21,22 @@ provider:
   runtime: nodejs8.10
   stage: dev
   region: eu-west-1
+  vpc:
+    securityGroupIds:
+      - ${env:lambdaExecSecurityGroup}
+    subnetIds:
+      - ${env:subnetAPrivate}
+      - ${env:subnetBPrivate}
+      - ${env:subnetCPrivate}
 functions:
-  graphql:
+  turing_graphql:
     handler: index.handler
-    environment:
-      DEPLOY_DB_HOST: db-turing.cgtjekwuvtry.us-west-2.rds.amazonaws.com
-      DEPLOY_DB_DATABASE: dbturing
-      DEPLOY_DB_USER: turing
-      DEPLOY_DB_PASSWORD: passturing
-      DEPLOY_DB_PORT: 3306
-      SECRET: turing
-      DB_MACHINE: mariadb
-      NODE_ENV: production
     events:
       - http:
           path: graphql
           method: post
           cors: true
-  playground:
+  turing_playground:
     handler: index.handler
     events:
       - http:

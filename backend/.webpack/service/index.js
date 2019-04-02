@@ -169,21 +169,24 @@ const handler = Object(_src_config_express__WEBPACK_IMPORTED_MODULE_6__["default
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sequelize", function() { return sequelize; });
-/* harmony import */ var sequelize__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sequelize */ "sequelize");
-/* harmony import */ var sequelize__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sequelize__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _relations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./relations */ "./src/config/relations.js");
-/* harmony import */ var _models__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./models */ "./src/config/models.js");
-/* harmony import */ var _env__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./env */ "./src/config/env.js");
+/* harmony import */ var _relations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./relations */ "./src/config/relations.js");
+/* harmony import */ var _models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./models */ "./src/config/models.js");
+/* harmony import */ var _env__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./env */ "./src/config/env.js");
+
+
+const Sequelize = __webpack_require__(/*! sequelize */ "sequelize");
 
 
 
-
-const database = _env__WEBPACK_IMPORTED_MODULE_3__["default"].DB_DATABASE;
-const username = _env__WEBPACK_IMPORTED_MODULE_3__["default"].DB_USER;
-const password = _env__WEBPACK_IMPORTED_MODULE_3__["default"].DB_PASSWORD;
-const sequelize = new sequelize__WEBPACK_IMPORTED_MODULE_0___default.a(database, username, password, {
-  host: _env__WEBPACK_IMPORTED_MODULE_3__["default"].DB_HOST,
-  dialect: _env__WEBPACK_IMPORTED_MODULE_3__["default"].DB_MACHINE,
+const database = _env__WEBPACK_IMPORTED_MODULE_2__["default"].DB_DATABASE;
+const username = _env__WEBPACK_IMPORTED_MODULE_2__["default"].DB_USER;
+const password = _env__WEBPACK_IMPORTED_MODULE_2__["default"].DB_PASSWORD;
+const sequelize = new Sequelize(database, username, password, {
+  host: _env__WEBPACK_IMPORTED_MODULE_2__["default"].DB_HOST,
+  dialect: _env__WEBPACK_IMPORTED_MODULE_2__["default"].DB_MACHINE,
+  dialectOptions: {
+    timeout: 30
+  },
   define: {
     defaultScope: {
       attributes: {
@@ -191,9 +194,12 @@ const sequelize = new sequelize__WEBPACK_IMPORTED_MODULE_0___default.a(database,
       }
     },
     timestamps: false
+  },
+  pool: {
+    maxIdleTime: 120000
   }
 });
-const models = Object(_relations__WEBPACK_IMPORTED_MODULE_1__["default"])(Object(_models__WEBPACK_IMPORTED_MODULE_2__["default"])(sequelize));
+const models = Object(_relations__WEBPACK_IMPORTED_MODULE_0__["default"])(Object(_models__WEBPACK_IMPORTED_MODULE_1__["default"])(sequelize));
 Object.keys(models).forEach(modelName => {
   if ('associate' in models[modelName]) {
     models[modelName].associate(models);

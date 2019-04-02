@@ -1,0 +1,125 @@
+version: 2
+references:
+  container_config: &container_config
+    working_directory: ~/tmp
+    docker:
+      - image: ronnf89/turing-backend:latest
+  add_workspace: &add_workspace
+    attach_workspace:
+      at: .
+  app_deploy: &app_deploy
+    steps:
+      - *add_workspace
+      - deploy:
+          name: Deploy app
+          command: |
+            yarn --cwd ~/tmp/backend sls deploy -v --stage $RELEASE_CHANNEL
+jobs:
+  checkout:
+    <<: *container_config
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: Check yarn version
+          command: yarn --version
+      - run:
+          name: Install Dependencies
+          command: yarn --cwd ~/tmp/backend install --frozen-lockfile
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - run:
+          name: Setup Environment Variables
+          command: |
+            echo 'export AWS_ACCESS_KEY_ID="$AWS_ACCESS_KEY_ID"' >> $BASH_ENV
+            echo 'export AWS_SECRET_ACCESS_KEY="$AWS_SECRET_ACCESS_KEY"' >> $BASH_ENV
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+  lint:
+    <<: *container_config
+    steps:
+      - *add_workspace
+      - run:
+          name: Run eslint
+          command: yarn --cwd ~/tmp/backend lint
+      - run:
+          name: Run stylelint
+          command: yarn --cwd ~/tmp/backend stylelint
+      - run:
+          name: Run flow type check
+          command: yarn --cwd ~/tmp/backend flow
+  test:
+    <<: *container_config
+    steps:
+      - *add_workspace
+      - run:
+          name: Run tests
+          command: yarn --cwd ~/tmp/backend test
+  deploy-app-pull-request:
+    <<: *container_config
+    environment:
+      RELEASE_CHANNEL: pull-request
+    <<: *app_deploy
+  deploy-app-staging:
+    <<: *container_config
+    environment:
+      RELEASE_CHANNEL: staging
+    <<: *app_deploy
+  deploy-app-production:
+    <<: *container_config
+    environment:
+      RELEASE_CHANNEL: default
+    <<: *app_deploy
+
+workflows:
+  version: 2
+  deploy:
+    jobs:
+      - checkout
+      - lint:
+          requires:
+            - checkout
+      - test:
+          requires:
+            - checkout
+      - approve-deploy-pull-request:
+          type: approval
+          filters:
+            branches:
+              ignore: master
+      - deploy-app-pull-request:
+          requires:
+            - lint
+            - test
+            - approve-deploy-pull-request
+          filters:
+            branches:
+              ignore: master
+      - deploy-app-staging:
+          requires:
+            - lint
+            - test
+          filters:
+            branches:
+              only: master
+      - approve-deploy:
+          type: approval
+          requires:
+            - deploy-app-staging
+          filters:
+            branches:
+              only: master
+      - deploy-app-production:
+          requires:
+            - approve-deploy
+          filters:
+            branches:
+              only: master

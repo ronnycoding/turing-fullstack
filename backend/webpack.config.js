@@ -24,15 +24,6 @@ module.exports = {
 						loader: 'babel-loader'
 					}
 				]
-			},
-			{
-				test: /\.js$/,
-				exclude: '/src/models/',
-				use: [
-					{
-						loader: 'babel-loader'
-					}
-				]
 			}
 		]
 	},

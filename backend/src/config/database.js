@@ -1,5 +1,5 @@
-import Sequelize from 'sequelize';
 import setModelsRelation from './relations';
+const Sequelize = require('sequelize');
 
 import getModels from './models';
 import ENV from './env';
@@ -11,6 +11,9 @@ const password = ENV.DB_PASSWORD;
 const sequelize = new Sequelize(database, username, password, {
 	host: ENV.DB_HOST,
 	dialect: ENV.DB_MACHINE,
+	dialectOptions: {
+		timeout: 30
+	},
 	define: {
 		defaultScope: {
 			attributes: {
@@ -18,6 +21,9 @@ const sequelize = new Sequelize(database, username, password, {
 			}
 		},
 		timestamps: false
+	},
+	pool: {
+		maxIdleTime: 120000
 	}
 });
 
