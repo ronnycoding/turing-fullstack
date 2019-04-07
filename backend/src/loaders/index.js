@@ -1,3 +1,3 @@
-import * as customer from './customer';
+import * as customer from './customer'
 
-export default { customer };
+export default { customer }

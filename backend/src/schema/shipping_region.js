@@ -1,4 +1,4 @@
-import { gql } from 'apollo-server-express';
+import { gql } from 'apollo-server-express'
 
 export default gql`
 	extend type Query {
@@ -12,4 +12,4 @@ export default gql`
 		shipping_region_id: ID!
 		shipping_region: String!
 	}
-`;
+`

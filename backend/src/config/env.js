@@ -14,8 +14,8 @@ const {
 	DEPLOY_DB_PASSWORD,
 	DEPLOY_DB_PORT,
 	AWS_ACCESS_KEY_ID,
-	AWS_SECRET_ACCESS_KEY
-} = process.env;
+	AWS_SECRET_ACCESS_KEY,
+} = process.env
 
 const ENV = {
 	development: {
@@ -29,7 +29,7 @@ const ENV = {
 		SECRET,
 		PORT,
 		AWS_ACCESS_KEY_ID,
-		AWS_SECRET_ACCESS_KEY
+		AWS_SECRET_ACCESS_KEY,
 	},
 	production: {
 		NODE_ENV,
@@ -42,13 +42,13 @@ const ENV = {
 		SECRET,
 		PORT,
 		AWS_ACCESS_KEY_ID,
-		AWS_SECRET_ACCESS_KEY
-	}
-};
-
-function getEnvVars(env = '') {
-	if (env === 'production') return ENV.production;
-	return ENV.development || ENV.staging;
+		AWS_SECRET_ACCESS_KEY,
+	},
 }
 
-export default getEnvVars(process.env.NODE_ENV);
+function getEnvVars(env = '') {
+	if (env === 'production') return ENV.production
+	return ENV.development || ENV.staging
+}
+
+export default getEnvVars(process.env.NODE_ENV)

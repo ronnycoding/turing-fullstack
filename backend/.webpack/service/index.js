@@ -104,9 +104,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _src_schema__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./src/schema */ "./src/schema/index.js");
 /* harmony import */ var _src_resolvers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./src/resolvers */ "./src/resolvers/index.js");
 /* harmony import */ var _src_config_database__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./src/config/database */ "./src/config/database.js");
-/* harmony import */ var _src_config_env__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./src/config/env */ "./src/config/env.js");
-/* harmony import */ var _src_config_express__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./src/config/express */ "./src/config/express.js");
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./utils */ "./utils.js");
+/* harmony import */ var _src_loaders__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./src/loaders */ "./src/loaders/index.js");
+/* harmony import */ var _src_config_env__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./src/config/env */ "./src/config/env.js");
+/* harmony import */ var _src_config_express__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./src/config/express */ "./src/config/express.js");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./utils */ "./utils.js");
+
 
 
 
@@ -136,25 +138,27 @@ const server = new apollo_server_express__WEBPACK_IMPORTED_MODULE_1__["ApolloSer
       return {
         models: _src_config_database__WEBPACK_IMPORTED_MODULE_4__["default"],
         loaders: {
-          customer: new dataloader__WEBPACK_IMPORTED_MODULE_0___default.a(keys => loaders.customer.batchCustomers(keys, _src_config_database__WEBPACK_IMPORTED_MODULE_4__["default"]))
+          customer: new dataloader__WEBPACK_IMPORTED_MODULE_0___default.a(keys => _src_loaders__WEBPACK_IMPORTED_MODULE_5__["default"].customer.batchCustomers(keys, _src_config_database__WEBPACK_IMPORTED_MODULE_4__["default"]))
         }
       };
     }
 
     if (req) {
-      const me = await Object(_utils__WEBPACK_IMPORTED_MODULE_7__["getMe"])(req);
+      const me = await Object(_utils__WEBPACK_IMPORTED_MODULE_8__["getMe"])(req);
       return {
         models: _src_config_database__WEBPACK_IMPORTED_MODULE_4__["default"],
         me,
-        secret: _src_config_env__WEBPACK_IMPORTED_MODULE_5__["default"].SECRET,
+        secret: _src_config_env__WEBPACK_IMPORTED_MODULE_6__["default"].SECRET,
         loaders: {
-          customer: new dataloader__WEBPACK_IMPORTED_MODULE_0___default.a(keys => loaders.customer.batchCustomers(keys, _src_config_database__WEBPACK_IMPORTED_MODULE_4__["default"]))
+          customer: new dataloader__WEBPACK_IMPORTED_MODULE_0___default.a(keys => _src_loaders__WEBPACK_IMPORTED_MODULE_5__["default"].customer.batchCustomers(keys, _src_config_database__WEBPACK_IMPORTED_MODULE_4__["default"]))
         }
       };
     }
+
+    return null;
   }
 });
-const handler = Object(_src_config_express__WEBPACK_IMPORTED_MODULE_6__["default"])(server, _src_config_database__WEBPACK_IMPORTED_MODULE_4__["sequelize"]);
+const handler = Object(_src_config_express__WEBPACK_IMPORTED_MODULE_7__["default"])(server, _src_config_database__WEBPACK_IMPORTED_MODULE_4__["sequelize"]);
 
 
 /***/ }),
@@ -174,9 +178,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _env__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./env */ "./src/config/env.js");
 
 
+
+
 const Sequelize = __webpack_require__(/*! sequelize */ "sequelize");
-
-
 
 const database = _env__WEBPACK_IMPORTED_MODULE_2__["default"].DB_DATABASE;
 const username = _env__WEBPACK_IMPORTED_MODULE_2__["default"].DB_USER;
@@ -291,14 +295,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var cors__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(cors__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var express__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! express */ "express");
 /* harmony import */ var express__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(express__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! http */ "http");
-/* harmony import */ var http__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(http__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var serverless_http__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! serverless-http */ "serverless-http");
-/* harmony import */ var serverless_http__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(serverless_http__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var graphql_playground_middleware_express__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! graphql-playground-middleware-express */ "graphql-playground-middleware-express");
-/* harmony import */ var graphql_playground_middleware_express__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(graphql_playground_middleware_express__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _env__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./env */ "./src/config/env.js");
-
+/* harmony import */ var serverless_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! serverless-http */ "serverless-http");
+/* harmony import */ var serverless_http__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(serverless_http__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var graphql_playground_middleware_express__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! graphql-playground-middleware-express */ "graphql-playground-middleware-express");
+/* harmony import */ var graphql_playground_middleware_express__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(graphql_playground_middleware_express__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _env__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./env */ "./src/config/env.js");
 
 
 
@@ -313,15 +314,16 @@ function createHttpServer(server, sequelize) {
     app,
     path: '/graphql'
   });
-  app.get('/playground', graphql_playground_middleware_express__WEBPACK_IMPORTED_MODULE_5___default()({
+  app.get('/playground', graphql_playground_middleware_express__WEBPACK_IMPORTED_MODULE_4___default()({
     endpoint: '/graphql'
   }));
   sequelize.sync({
     force: false
   }).then(async () => {
-    console.log(`Apollo Server on http://localhost:${_env__WEBPACK_IMPORTED_MODULE_6__["default"].DB_PORT}/graphql`);
+    // eslint-disable-next-line no-console
+    console.log(`Apollo Server on http://localhost:${_env__WEBPACK_IMPORTED_MODULE_5__["default"].DB_PORT}/graphql`);
   });
-  return serverless_http__WEBPACK_IMPORTED_MODULE_4___default()(app);
+  return serverless_http__WEBPACK_IMPORTED_MODULE_3___default()(app);
 }
 
 /***/ }),
@@ -421,7 +423,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var bcrypt__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! bcrypt */ "bcrypt");
 /* harmony import */ var bcrypt__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(bcrypt__WEBPACK_IMPORTED_MODULE_0__);
 
-function setModelsRelation(models) {
+function setModelsRelation(modelsWithRelation) {
   const {
     Customer,
     ShippingRegion,
@@ -436,7 +438,7 @@ function setModelsRelation(models) {
     Tax,
     OrderDetail,
     ShoppingCart
-  } = models;
+  } = modelsWithRelation;
 
   Customer.associate = models => {
     models.Customer.belongsTo(ShippingRegion, {
@@ -472,16 +474,17 @@ function setModelsRelation(models) {
   };
 
   Customer.beforeCreate(async customer => {
+    // eslint-disable-next-line no-param-reassign
     customer.password = await customer.generatePasswordHash();
   });
 
-  Customer.prototype.generatePasswordHash = async function () {
+  Customer.prototype.generatePasswordHash = async function generatePasswordHash() {
     const saltRounds = 10;
-    return await bcrypt__WEBPACK_IMPORTED_MODULE_0___default.a.hash(this.password, saltRounds);
+    return bcrypt__WEBPACK_IMPORTED_MODULE_0___default.a.hash(this.password, saltRounds);
   };
 
-  Customer.prototype.validatePassword = async function (password) {
-    return await bcrypt__WEBPACK_IMPORTED_MODULE_0___default.a.compare(password, this.password);
+  Customer.prototype.validatePassword = async function validatePassword(password) {
+    return bcrypt__WEBPACK_IMPORTED_MODULE_0___default.a.compare(password, this.password);
   };
 
   ShippingRegion.associate = models => {
@@ -612,7 +615,7 @@ function setModelsRelation(models) {
     });
   };
 
-  return { ...models,
+  return { ...modelsWithRelation,
     Customer,
     ShippingRegion,
     Attribute,
@@ -627,6 +630,46 @@ function setModelsRelation(models) {
     ShoppingCart
   };
 }
+
+/***/ }),
+
+/***/ "./src/loaders/customer.js":
+/*!*********************************!*\
+  !*** ./src/loaders/customer.js ***!
+  \*********************************/
+/*! exports provided: batchCustomers */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "batchCustomers", function() { return batchCustomers; });
+const batchCustomers = async (keys, models) => {
+  const customers = await models.Customer.findAll({
+    where: {
+      customer_id: {
+        $in: keys
+      }
+    }
+  });
+  return keys.map(key => customers.find(customer => customer.customer_id === key));
+};
+
+/***/ }),
+
+/***/ "./src/loaders/index.js":
+/*!******************************!*\
+  !*** ./src/loaders/index.js ***!
+  \******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _customer__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./customer */ "./src/loaders/customer.js");
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  customer: _customer__WEBPACK_IMPORTED_MODULE_0__
+});
 
 /***/ }),
 
@@ -1255,14 +1298,12 @@ __webpack_require__.r(__webpack_exports__);
   Query: {
     attributes: async (parent, args, {
       models
-    }) => await models.Attribute.findAll(),
+    }) => models.Attribute.findAll(),
     attribute: async (parent, {
       attribute_id
     }, {
       models
-    }) => {
-      return await models.Attribute.findById(attribute_id);
-    }
+    }) => models.Attribute.findById(attribute_id)
   }
 });
 
@@ -1281,21 +1322,19 @@ __webpack_require__.r(__webpack_exports__);
   Query: {
     attribute_values: async (parent, args, {
       models
-    }) => await models.AttributeValue.findAll(),
+    }) => models.AttributeValue.findAll(),
     attribute_value: async (parent, {
       attribute_value_id
     }, {
       models
-    }) => {
-      return await models.AttributeValue.findByPk(attribute_value_id);
-    },
+    }) => models.AttributeValue.findByPk(attribute_value_id),
     getAttributeValuesByAttributeId: async (parent, {
       attribute_id
     }, {
       models
     }) => {
       const attribute = await models.Attribute.findByPk(attribute_id);
-      return await attribute.getAttributeValue();
+      return attribute.getAttributeValue();
     },
     getAttributeValuesByProductId: async (parent, {
       product_id
@@ -1310,7 +1349,7 @@ __webpack_require__.r(__webpack_exports__);
       const attributeValueIds = ProductAttributeValues.map(({
         attribute_value_id
       }) => attribute_value_id);
-      return await models.AttributeValue.findAll({
+      return models.AttributeValue.findAll({
         where: {
           attribute_value_id: attributeValueIds
         }
@@ -1379,21 +1418,19 @@ __webpack_require__.r(__webpack_exports__);
   Query: {
     categories: async (parent, args, {
       models
-    }) => await models.Category.findAll(),
+    }) => models.Category.findAll(),
     category: async (parent, {
       category_id
     }, {
       models
-    }) => {
-      return await models.Category.findByPk(category_id);
-    },
+    }) => models.Category.findByPk(category_id),
     getCategoriesByDeparmentId: async (parent, {
       department_id
     }, {
       models
     }) => {
       const deparment = await models.Department.findByPk(department_id);
-      return await deparment.getCategory();
+      return deparment.getCategory();
     },
     getCategoryByProductId: async (parent, {
       product_id
@@ -1409,7 +1446,7 @@ __webpack_require__.r(__webpack_exports__);
       const {
         category_id
       } = productCategory[0] || {};
-      return await models.Category.findByPk(category_id);
+      return models.Category.findByPk(category_id);
     }
   }
 });
@@ -1444,7 +1481,7 @@ const createToken = async (customer, secret, expiresIn) => {
     name // role,
 
   } = customer;
-  return await jsonwebtoken__WEBPACK_IMPORTED_MODULE_0___default.a.sign({
+  return jsonwebtoken__WEBPACK_IMPORTED_MODULE_0___default.a.sign({
     customer_id,
     email,
     name // role,
@@ -1458,12 +1495,12 @@ const createToken = async (customer, secret, expiresIn) => {
   Query: {
     customers: async (parent, args, {
       models
-    }) => await models.Customer.findAll(),
+    }) => models.Customer.findAll(),
     customer: async (parent, {
       customer_id
     }, {
       models
-    }) => await models.Customer.findById(customer_id),
+    }) => models.Customer.findById(customer_id),
     me: async (parent, args, {
       models,
       me
@@ -1472,7 +1509,7 @@ const createToken = async (customer, secret, expiresIn) => {
         return null;
       }
 
-      return await models.Customer.findById(me.customer_id);
+      return models.Customer.findById(me.customer_id);
     }
   },
   Mutation: {
@@ -1521,14 +1558,14 @@ const createToken = async (customer, secret, expiresIn) => {
       me
     }) => {
       const customer = await models.Customer.findById(me.customer_id);
-      return await customer.update({ ...args
+      return customer.update({ ...args
       });
     }),
     deleteCustomer: Object(graphql_resolvers__WEBPACK_IMPORTED_MODULE_1__["combineResolvers"])(_authorization__WEBPACK_IMPORTED_MODULE_3__["isAuthenticated"], async (parent, {
       customer_id
     }, {
       models
-    }) => await models.User.destroy({
+    }) => models.User.destroy({
       where: {
         customer_id
       }
@@ -1551,21 +1588,19 @@ __webpack_require__.r(__webpack_exports__);
   Query: {
     departments: async (parent, args, {
       models
-    }) => await models.Department.findAll(),
+    }) => models.Department.findAll(),
     department: async (parent, {
       department_id
     }, {
       models
-    }) => {
-      return await models.Department.findByPk(department_id);
-    },
+    }) => models.Department.findByPk(department_id),
     getDepartmentByCategoryId: async (parent, {
       category_id
     }, {
       models
     }) => {
       const category = await models.Category.findByPk(category_id);
-      return await category.getDepartment();
+      return category.getDepartment();
     }
   }
 });
@@ -1644,7 +1679,7 @@ __webpack_require__.r(__webpack_exports__);
     }) => {
       const order = await models.Customer.findByPk(customer_id);
       if (!order) return null;
-      return await order.getOrders();
+      return order.getOrders();
     },
     getOrdersByShippingId: async (parent, {
       shipping_id
@@ -1653,7 +1688,7 @@ __webpack_require__.r(__webpack_exports__);
     }) => {
       const shipping = await models.Shipping.findByPk(shipping_id);
       if (!shipping) return null;
-      return await shipping.getOrders();
+      return shipping.getOrders();
     }
   },
   Mutation: {
@@ -1667,7 +1702,7 @@ __webpack_require__.r(__webpack_exports__);
       const {
         customer_id
       } = me;
-      return await models.Order.create({ ...args,
+      return models.Order.create({ ...args,
         status,
         customer_id,
         created_on: new Date()
@@ -1683,7 +1718,7 @@ __webpack_require__.r(__webpack_exports__);
     }) => {
       const order = await models.Order.findByPk(order_id);
       const s = status || order.status;
-      return await order.update({ ...args,
+      return order.update({ ...args,
         status: s
       });
     }),
@@ -1696,7 +1731,7 @@ __webpack_require__.r(__webpack_exports__);
       const {
         customer_id
       } = me;
-      return await models.Order.destroy({
+      return models.Order.destroy({
         where: {
           customer_id,
           order_id
@@ -1719,29 +1754,26 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var graphql_resolvers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! graphql-resolvers */ "graphql-resolvers");
 /* harmony import */ var graphql_resolvers__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(graphql_resolvers__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _authorization__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./authorization */ "./src/resolvers/authorization.js");
-/* harmony import */ var apollo_server__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! apollo-server */ "apollo-server");
-/* harmony import */ var apollo_server__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(apollo_server__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var apollo_server__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! apollo-server */ "apollo-server");
+/* harmony import */ var apollo_server__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(apollo_server__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _authorization__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./authorization */ "./src/resolvers/authorization.js");
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   Query: {
-    getOrdersDetailByOrderId: Object(graphql_resolvers__WEBPACK_IMPORTED_MODULE_0__["combineResolvers"])(_authorization__WEBPACK_IMPORTED_MODULE_1__["isAuthenticated"], async (parent, {
+    getOrdersDetailByOrderId: Object(graphql_resolvers__WEBPACK_IMPORTED_MODULE_0__["combineResolvers"])(_authorization__WEBPACK_IMPORTED_MODULE_2__["isAuthenticated"], async (parent, {
       order_id
     }, {
-      models,
-      me
-    }) => {
-      return await models.OrderDetail.findAll({
-        where: {
-          order_id
-        }
-      });
-    })
+      models
+    }) => models.OrderDetail.findAll({
+      where: {
+        order_id
+      }
+    }))
   },
   Mutation: {
-    createOrderDetail: Object(graphql_resolvers__WEBPACK_IMPORTED_MODULE_0__["combineResolvers"])(_authorization__WEBPACK_IMPORTED_MODULE_1__["isAuthenticated"], async (parent, args, {
+    createOrderDetail: Object(graphql_resolvers__WEBPACK_IMPORTED_MODULE_0__["combineResolvers"])(_authorization__WEBPACK_IMPORTED_MODULE_2__["isAuthenticated"], async (parent, args, {
       models
     }) => {
       const {
@@ -1750,19 +1782,19 @@ __webpack_require__.r(__webpack_exports__);
       const product = await models.Product.findByPk(product_id);
 
       if (!product) {
-        throw new apollo_server__WEBPACK_IMPORTED_MODULE_2__["UserInputError"](`No product found with product_id ${product_id}.`);
+        throw new apollo_server__WEBPACK_IMPORTED_MODULE_1__["UserInputError"](`No product found with product_id ${product_id}.`);
       }
 
       const {
         name: product_name,
         price: unit_cost
       } = product;
-      return await models.OrderDetail.create({ ...args,
+      return models.OrderDetail.create({ ...args,
         product_name,
         unit_cost
       });
     }),
-    updateOrderDetail: Object(graphql_resolvers__WEBPACK_IMPORTED_MODULE_0__["combineResolvers"])(_authorization__WEBPACK_IMPORTED_MODULE_1__["isAuthenticated"], async (parent, {
+    updateOrderDetail: Object(graphql_resolvers__WEBPACK_IMPORTED_MODULE_0__["combineResolvers"])(_authorization__WEBPACK_IMPORTED_MODULE_2__["isAuthenticated"], async (parent, {
       item_id,
       ...args
     }, {
@@ -1771,23 +1803,21 @@ __webpack_require__.r(__webpack_exports__);
       const orderDetails = await models.OrderDetail.findByPk(item_id);
 
       if (!orderDetails) {
-        throw new apollo_server__WEBPACK_IMPORTED_MODULE_2__["UserInputError"]('No order detais found.');
+        throw new apollo_server__WEBPACK_IMPORTED_MODULE_1__["UserInputError"]('No order detais found.');
       }
 
-      return await orderDetails.update({ ...args
+      return orderDetails.update({ ...args
       });
     }),
-    deleteOrderDetail: Object(graphql_resolvers__WEBPACK_IMPORTED_MODULE_0__["combineResolvers"])(_authorization__WEBPACK_IMPORTED_MODULE_1__["isAuthenticated"], async (parent, {
+    deleteOrderDetail: Object(graphql_resolvers__WEBPACK_IMPORTED_MODULE_0__["combineResolvers"])(_authorization__WEBPACK_IMPORTED_MODULE_2__["isAuthenticated"], async (parent, {
       item_id
     }, {
       models
-    }) => {
-      return await models.OrderDetail.destroy({
-        where: {
-          item_id
-        }
-      });
-    })
+    }) => models.OrderDetail.destroy({
+      where: {
+        item_id
+      }
+    }))
   }
 });
 
@@ -1806,14 +1836,12 @@ __webpack_require__.r(__webpack_exports__);
   Query: {
     products: async (parent, args, {
       models
-    }) => await models.Product.findAll(),
+    }) => models.Product.findAll(),
     product: async (parent, {
       product_id
     }, {
       models
-    }) => {
-      return await models.Product.findByPk(product_id);
-    },
+    }) => models.Product.findByPk(product_id),
     getProductsByCategoryId: async (parent, {
       category_id
     }, {
@@ -1827,7 +1855,7 @@ __webpack_require__.r(__webpack_exports__);
       const productIds = categoryProducts.map(({
         product_id
       }) => product_id);
-      return await models.Product.findAll({
+      return models.Product.findAll({
         where: {
           product_id: productIds
         }
@@ -1846,7 +1874,7 @@ __webpack_require__.r(__webpack_exports__);
       const productIds = attributeValueProducts.map(({
         product_id
       }) => product_id);
-      return await models.Product.findAll({
+      return models.Product.findAll({
         where: {
           product_id: productIds
         }
@@ -1868,9 +1896,9 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var graphql_resolvers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! graphql-resolvers */ "graphql-resolvers");
 /* harmony import */ var graphql_resolvers__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(graphql_resolvers__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _authorization__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./authorization */ "./src/resolvers/authorization.js");
-/* harmony import */ var apollo_server__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! apollo-server */ "apollo-server");
-/* harmony import */ var apollo_server__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(apollo_server__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var apollo_server__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! apollo-server */ "apollo-server");
+/* harmony import */ var apollo_server__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(apollo_server__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _authorization__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./authorization */ "./src/resolvers/authorization.js");
 
 
 
@@ -1880,9 +1908,7 @@ __webpack_require__.r(__webpack_exports__);
       review_id
     }, {
       models
-    }) => {
-      return await models.Review.findByPk(review_id);
-    },
+    }) => models.Review.findByPk(review_id),
     getReviewsByProductId: async (parent, {
       product_id
     }, {
@@ -1891,10 +1917,10 @@ __webpack_require__.r(__webpack_exports__);
       const product = await models.Product.findByPk(product_id);
 
       if (!product) {
-        throw new apollo_server__WEBPACK_IMPORTED_MODULE_2__["UserInputError"]('No product found.');
+        throw new apollo_server__WEBPACK_IMPORTED_MODULE_1__["UserInputError"]('No product found.');
       }
 
-      return await product.getReviews();
+      return product.getReviews();
     },
     getReviewsByCustomerId: async (parent, {
       customer_id
@@ -1904,27 +1930,27 @@ __webpack_require__.r(__webpack_exports__);
       const customer = await models.Customer.findByPk(customer_id);
 
       if (!customer) {
-        throw new apollo_server__WEBPACK_IMPORTED_MODULE_2__["UserInputError"]('No customer found.');
+        throw new apollo_server__WEBPACK_IMPORTED_MODULE_1__["UserInputError"]('No customer found.');
       }
 
-      return await customer.getReviews();
+      return customer.getReviews();
     }
   },
   Mutation: {
-    createReview: Object(graphql_resolvers__WEBPACK_IMPORTED_MODULE_0__["combineResolvers"])(_authorization__WEBPACK_IMPORTED_MODULE_1__["isAuthenticated"], async (parent, args, {
+    createReview: Object(graphql_resolvers__WEBPACK_IMPORTED_MODULE_0__["combineResolvers"])(_authorization__WEBPACK_IMPORTED_MODULE_2__["isAuthenticated"], async (parent, args, {
       models,
       me
     }) => {
       const {
         customer_id
       } = me;
-      return await models.Review.create({
+      return models.Review.create({
         customer_id,
         created_on: new Date(),
         ...args
       });
     }),
-    updateReview: Object(graphql_resolvers__WEBPACK_IMPORTED_MODULE_0__["combineResolvers"])(_authorization__WEBPACK_IMPORTED_MODULE_1__["isAuthenticated"], async (parent, {
+    updateReview: Object(graphql_resolvers__WEBPACK_IMPORTED_MODULE_0__["combineResolvers"])(_authorization__WEBPACK_IMPORTED_MODULE_2__["isAuthenticated"], async (parent, {
       review_id,
       ...args
     }, {
@@ -1933,13 +1959,13 @@ __webpack_require__.r(__webpack_exports__);
       const review = await models.Review.findByPk(review_id);
 
       if (!review) {
-        throw new apollo_server__WEBPACK_IMPORTED_MODULE_2__["UserInputError"]('No review found.');
+        throw new apollo_server__WEBPACK_IMPORTED_MODULE_1__["UserInputError"]('No review found.');
       }
 
-      return await review.update({ ...args
+      return review.update({ ...args
       });
     }),
-    deleteReview: Object(graphql_resolvers__WEBPACK_IMPORTED_MODULE_0__["combineResolvers"])(_authorization__WEBPACK_IMPORTED_MODULE_1__["isAuthenticated"], async (parent, {
+    deleteReview: Object(graphql_resolvers__WEBPACK_IMPORTED_MODULE_0__["combineResolvers"])(_authorization__WEBPACK_IMPORTED_MODULE_2__["isAuthenticated"], async (parent, {
       review_id
     }, {
       models,
@@ -1948,7 +1974,7 @@ __webpack_require__.r(__webpack_exports__);
       const {
         customer_id
       } = me;
-      return await models.Review.destroy({
+      return models.Review.destroy({
         where: {
           customer_id,
           review_id
@@ -1976,14 +2002,12 @@ __webpack_require__.r(__webpack_exports__);
   Query: {
     shippings: async (parent, args, {
       models
-    }) => await models.Shipping.findAll(),
+    }) => models.Shipping.findAll(),
     shipping: async (parent, {
       shipping_id
     }, {
       models
-    }) => {
-      return await models.Shipping.findByPk(shipping_id);
-    },
+    }) => models.Shipping.findByPk(shipping_id),
     getShippingsByShippingRegionId: async (parent, {
       shipping_region_id
     }, {
@@ -1995,7 +2019,7 @@ __webpack_require__.r(__webpack_exports__);
         throw new apollo_server__WEBPACK_IMPORTED_MODULE_0__["UserInputError"]('No shipping region found.');
       }
 
-      return await shippingRegion.getShippings();
+      return shippingRegion.getShippings();
     }
   }
 });
@@ -2018,14 +2042,12 @@ __webpack_require__.r(__webpack_exports__);
   Query: {
     shippingRegions: async (parent, args, {
       models
-    }) => await models.ShippingRegion.findAll(),
+    }) => models.ShippingRegion.findAll(),
     shippingRegion: async (parent, {
       shipping_region_id
     }, {
       models
-    }) => {
-      return await models.ShippingRegion.findByPk(shipping_region_id);
-    },
+    }) => models.ShippingRegion.findByPk(shipping_region_id),
     getShippingRegionByCustomerId: async (parent, {
       customer_id
     }, {
@@ -2037,7 +2059,7 @@ __webpack_require__.r(__webpack_exports__);
         throw new apollo_server__WEBPACK_IMPORTED_MODULE_0__["UserInputError"]('No customer found.');
       }
 
-      return await customer.getShippingRegion();
+      return customer.getShippingRegion();
     },
     getShippingRegionByShippingId: async (parent, {
       shipping_id
@@ -2050,7 +2072,7 @@ __webpack_require__.r(__webpack_exports__);
         throw new apollo_server__WEBPACK_IMPORTED_MODULE_0__["UserInputError"]('No shipping found.');
       }
 
-      return await shipping.getShippingRegion();
+      return shipping.getShippingRegion();
     }
   }
 });
@@ -2081,7 +2103,7 @@ __webpack_require__.r(__webpack_exports__);
       cart_id
     }, {
       models
-    }) => await models.ShoppingCart.findAll({
+    }) => models.ShoppingCart.findAll({
       where: {
         product_id,
         cart_id
@@ -2090,16 +2112,10 @@ __webpack_require__.r(__webpack_exports__);
   },
   Mutation: {
     createShoppingCart: Object(graphql_resolvers__WEBPACK_IMPORTED_MODULE_0__["combineResolvers"])(_authorization__WEBPACK_IMPORTED_MODULE_2__["isAuthenticated"], async (parent, args, {
-      models,
-      me
-    }) => {
-      const {
-        customer_id
-      } = me;
-      return await models.ShoppingCart.create({ ...args,
-        added_on: new Date()
-      });
-    }),
+      models
+    }) => models.ShoppingCart.create({ ...args,
+      added_on: new Date()
+    })),
     updateShoppingCart: Object(graphql_resolvers__WEBPACK_IMPORTED_MODULE_0__["combineResolvers"])(_authorization__WEBPACK_IMPORTED_MODULE_2__["isAuthenticated"], async (parent, {
       cart_id,
       product_id,
@@ -2119,7 +2135,7 @@ __webpack_require__.r(__webpack_exports__);
         throw new apollo_server__WEBPACK_IMPORTED_MODULE_1__["UserInputError"]('No shopping cart found.');
       }
 
-      return await shoppingCart[0].update({ ...args
+      return shoppingCart[0].update({ ...args
       });
     }),
     deleteShoppingCart: Object(graphql_resolvers__WEBPACK_IMPORTED_MODULE_0__["combineResolvers"])(_authorization__WEBPACK_IMPORTED_MODULE_2__["isAuthenticated"], async (parent, {
@@ -2127,7 +2143,7 @@ __webpack_require__.r(__webpack_exports__);
       product_id
     }, {
       models
-    }) => await models.ShoppingCart.destroy({
+    }) => models.ShoppingCart.destroy({
       where: {
         product_id,
         cart_id
@@ -2154,14 +2170,12 @@ __webpack_require__.r(__webpack_exports__);
   Query: {
     taxes: async (parent, args, {
       models
-    }) => await models.Tax.findAll(),
+    }) => models.Tax.findAll(),
     tax: async (parent, {
       tax_id
     }, {
       models
-    }) => {
-      return await models.Tax.findByPk(tax_id);
-    },
+    }) => models.Tax.findByPk(tax_id),
     getTaxByOrderId: async (parent, {
       order_id
     }, {
@@ -2173,7 +2187,7 @@ __webpack_require__.r(__webpack_exports__);
         throw new apollo_server__WEBPACK_IMPORTED_MODULE_0__["UserInputError"]('No order found.');
       }
 
-      return await order.getTax();
+      return order.getTax();
     }
   }
 });
@@ -2790,6 +2804,8 @@ const getMe = async req => {
       throw new apollo_server_express__WEBPACK_IMPORTED_MODULE_1__["AuthenticationError"]('Your session expired. Sign in again.');
     }
   }
+
+  return null;
 };
 
 /***/ }),
@@ -2890,17 +2906,6 @@ module.exports = require("graphql-playground-middleware-express");
 /***/ (function(module, exports) {
 
 module.exports = require("graphql-resolvers");
-
-/***/ }),
-
-/***/ "http":
-/*!***********************!*\
-  !*** external "http" ***!
-  \***********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = require("http");
 
 /***/ }),
 

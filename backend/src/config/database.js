@@ -1,40 +1,41 @@
-import setModelsRelation from './relations';
-const Sequelize = require('sequelize');
+import setModelsRelation from './relations'
 
-import getModels from './models';
-import ENV from './env';
+import getModels from './models'
+import ENV from './env'
 
-const database = ENV.DB_DATABASE;
-const username = ENV.DB_USER;
-const password = ENV.DB_PASSWORD;
+const Sequelize = require('sequelize')
+
+const database = ENV.DB_DATABASE
+const username = ENV.DB_USER
+const password = ENV.DB_PASSWORD
 
 const sequelize = new Sequelize(database, username, password, {
 	host: ENV.DB_HOST,
 	dialect: ENV.DB_MACHINE,
 	dialectOptions: {
-		timeout: 30
+		timeout: 30,
 	},
 	define: {
 		defaultScope: {
 			attributes: {
-				exclude: ['createdAt', 'updatedAt']
-			}
+				exclude: ['createdAt', 'updatedAt'],
+			},
 		},
-		timestamps: false
+		timestamps: false,
 	},
 	pool: {
-		maxIdleTime: 120000
-	}
-});
+		maxIdleTime: 120000,
+	},
+})
 
-const models = setModelsRelation(getModels(sequelize));
+const models = setModelsRelation(getModels(sequelize))
 
-Object.keys(models).forEach(modelName => {
+Object.keys(models).forEach((modelName) => {
 	if ('associate' in models[modelName]) {
-		models[modelName].associate(models);
+		models[modelName].associate(models)
 	}
-});
+})
 
-export { sequelize };
+export { sequelize }
 
-export default models;
+export default models

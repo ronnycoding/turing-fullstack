@@ -1,19 +1,19 @@
-import { gql } from 'apollo-server-express';
-import customerSchema from './customer';
-import chippingRegionSchema from './shipping_region';
-import attributeRegionSchema from './attribute';
-import attributeValueSchema from './attribute_value';
-import departmentSchema from './department';
-import productCategorySchema from './product_category';
-import categorySchema from './category';
-import productSchema from './product';
-import productAttributeSchema from './product_attribute';
-import ShippingSchema from './shipping';
-import reviewSchema from './review';
-import orderSchema from './order';
-import taxSchema from './tax';
-import orderDetailsSchema from './order_detail';
-import shoppingCartSchema from './shopping_cart';
+import { gql } from 'apollo-server-express'
+import customerSchema from './customer'
+import chippingRegionSchema from './shipping_region'
+import attributeRegionSchema from './attribute'
+import attributeValueSchema from './attribute_value'
+import departmentSchema from './department'
+import productCategorySchema from './product_category'
+import categorySchema from './category'
+import productSchema from './product'
+import productAttributeSchema from './product_attribute'
+import ShippingSchema from './shipping'
+import reviewSchema from './review'
+import orderSchema from './order'
+import taxSchema from './tax'
+import orderDetailsSchema from './order_detail'
+import shoppingCartSchema from './shopping_cart'
 
 const linkSchema = gql`
 	scalar Date
@@ -29,23 +29,23 @@ const linkSchema = gql`
 	type Subscription {
 		_: Boolean
 	}
-`;
+`
 
 export default [
-  linkSchema,
-  customerSchema,
-  chippingRegionSchema,
-  attributeRegionSchema,
-  attributeValueSchema,
-  departmentSchema,
-  productCategorySchema,
-  categorySchema,
-  productSchema,
-  productAttributeSchema,
-  ShippingSchema,
-  reviewSchema,
-  orderSchema,
-  taxSchema,
-  orderDetailsSchema,
-  shoppingCartSchema,
-];
+	linkSchema,
+	customerSchema,
+	chippingRegionSchema,
+	attributeRegionSchema,
+	attributeValueSchema,
+	departmentSchema,
+	productCategorySchema,
+	categorySchema,
+	productSchema,
+	productAttributeSchema,
+	ShippingSchema,
+	reviewSchema,
+	orderSchema,
+	taxSchema,
+	orderDetailsSchema,
+	shoppingCartSchema,
+]
