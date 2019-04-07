@@ -19,7 +19,6 @@ else
 fi
 
 sudo yarn --cwd $DIR_PROJECT install
-
 yarn --cwd $DIR_PROJECT sls offline start
   
 exec "$@"

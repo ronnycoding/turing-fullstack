@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 
 export default function setModelsRelation(modelsWithRelation) {
 	const {
@@ -54,12 +54,12 @@ export default function setModelsRelation(modelsWithRelation) {
 	})
 
 	Customer.prototype.generatePasswordHash = async function generatePasswordHash() {
-		const saltRounds = 10
-		return bcrypt.hash(this.password, saltRounds)
+		const saltRound = bcrypt.genSalt(10, async (err, salt) => salt)
+		return bcrypt.hash(this.password, saltRound, async (err, hash) => hash)
 	}
 
 	Customer.prototype.validatePassword = async function validatePassword(password) {
-		return bcrypt.compare(password, this.password)
+		return bcrypt.compare(password, this.password, async (err, res) => res === true)
 	}
 
 	ShippingRegion.associate = (models) => {

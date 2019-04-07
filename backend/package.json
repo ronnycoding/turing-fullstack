@@ -11,24 +11,20 @@
 		"flow": "flow",
 		"flow:watch": "flow-watch",
 		"lint": "eslint .",
-		"stylelint": "stylelint **/*.js",
-		"test": "echo \"testing\";"
+		"test": "echo \"testing\";",
+		"stylelint": "stylelint **/*.js"
 	},
 	"dependencies": {
-		"@babel/core": "^7.4.3",
-		"@babel/node": "^7.2.2",
-		"@babel/preset-env": "^7.4.3",
-		"@babel/register": "^7.4.0",
 		"apollo-server": "^2.4.8",
 		"apollo-server-express": "^2.4.8",
 		"apollo-server-lambda": "^2.4.8",
-		"babel-loader": "^8.0.5",
-		"bcrypt": "^3.0.5",
+		"bcryptjs": "^2.4.3",
 		"body-parser": "^1.18.3",
 		"cors": "^2.8.5",
 		"dataloader": "^1.4.0",
 		"dotenv": "^7.0.0",
 		"express": "^4.16.4",
+		"flow-cli": "^w0.0.0-pre",
 		"graphql": "^14.2.1",
 		"graphql-import": "^0.7.1",
 		"graphql-iso-date": "^3.6.1",
@@ -45,19 +41,35 @@
 		"serverless-http": "^1.9.1",
 		"serverless-offline": "^4.9.4",
 		"serverless-webpack": "^5.2.0",
-		"webpack": "^4.29.6",
-		"webpack-node-externals": "^1.7.2"
-	},
-	"devDependencies": {
 		"babel-eslint": "^10.0.1",
 		"eslint": "^5.16.0",
+		"webpack-node-externals": "^1.7.2",
+		"babel-loader": "^8.0.5",
+		"@babel/core": "^7.4.3",
+		"@babel/node": "^7.2.2",
+		"@babel/preset-env": "^7.4.3",
+		"@babel/preset-flow": "^7.0.0",
+		"@babel/register": "^7.4.0",
 		"eslint-config-airbnb": "^17.1.0",
 		"eslint-config-airbnb-base": "^13.1.0",
+		"eslint-plugin-flowtype": "^3.6.0",
 		"eslint-plugin-import": "^2.16.0",
 		"eslint-plugin-jsx-a11y": "^6.2.1",
 		"eslint-plugin-react": "^7.12.4",
-		"mocha": "^6.0.2",
-		"serverless-dotenv-plugin": "^2.0.1"
+		"stylelint": "^9.8.0",
+		"stylelint-config-standard": "^18.2.0",
+		"stylelint-order": "^2.0.0",
+		"serverless-offline-dotenv": "^0.0.11",
+		"webpack": "^4.29.6"
+	},
+	"devDependencies": {
+		"flow-bin": "^0.96.0",
+		"flow-copy-source": "^2.0.2",
+		"flow-typed": "^2.5.1",
+		"flow-watch": "^1.1.3",
+		"husky": "^1.3.1",
+		"lint-staged": "^8.1.5",
+		"mocha": "^6.0.2"
 	},
 	"husky": {
 		"hooks": {
@@ -65,9 +77,6 @@
 		}
 	},
 	"lint-staged": {
-		"*.js": [
-			"eslint --fix",
-			"git add"
-		]
+		"*.js": ["eslint --fix", "git add"]
 	}
 }

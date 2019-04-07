@@ -1,5 +1,4 @@
 import setModelsRelation from './relations'
-
 import getModels from './models'
 import ENV from './env'
 
@@ -8,6 +7,8 @@ const Sequelize = require('sequelize')
 const database = ENV.DB_DATABASE
 const username = ENV.DB_USER
 const password = ENV.DB_PASSWORD
+// eslint-disable-next-line no-console
+console.log('ENV', ENV)
 
 const sequelize = new Sequelize(database, username, password, {
 	host: ENV.DB_HOST,

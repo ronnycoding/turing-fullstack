@@ -10,7 +10,12 @@ RUN sudo pip install --user --upgrade pip; \
   sudo pip install --user awscli; \
   sudo pip install --user awscli --upgrade
 
-RUN sudo npm install sequelize-auto mysql serverless sequelize -g
+RUN sudo npm install sequelize-auto \
+  eslint \
+  mysql \
+  serverless \
+  flow-bin \
+  sequelize -g
 
 ADD ./package.json /var/www/app/package.json
 ADD ./yarn.lock /var/www/app/yarn.lock

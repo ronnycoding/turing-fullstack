@@ -1,6 +1,7 @@
 version: '3.1'
 services:
   database:
+    env_file: ./database/.env
     build: ./database
     restart: always
     ports:
@@ -8,7 +9,6 @@ services:
     volumes:
       - ./db-data/:/var/lib/mysql
       - ./database/backup:/backup
-      - ./backend/.env:/.env
     # labels:
     #   - 'traefik.enable=false'
 
@@ -26,7 +26,6 @@ services:
   
   backend:
     build: ./backend
-    env_file: ./backend/.env
     volumes:
       - /var/www/app/node_modules
       - ./backend:/var/www/app
@@ -35,6 +34,12 @@ services:
     environment:
       - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
       - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - DB_HOST=${DB_HOST}
+      - DB_DATABASE=${DB_DATABASE}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_PORT=${DB_PORT}
+      - DB_MACHINE=${DB_MACHINE}
+      - SECRET=${SECRET}
     ports:
       - 8000:3000
     # labels:

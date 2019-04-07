@@ -22,7 +22,7 @@ jobs:
       - restore_cache:
           name: Restore Yarn Package Cache
           keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}
+            - yarn-packages-{{ checksum "~/tmp/backend/yarn.lock" }}
       - run:
           name: Check yarn version
           command: yarn --version
@@ -31,14 +31,24 @@ jobs:
           command: yarn --cwd ~/tmp/backend install --frozen-lockfile
       - save_cache:
           name: Save Yarn Package Cache
-          key: yarn-packages-{{ checksum "yarn.lock" }}
+          key: yarn-packages-{{ checksum "~/tmp/backend/yarn.lock" }}
           paths:
             - ~/.cache/yarn
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+  build_models:
+    <<: *container_config
+    steps:
+      - *add_workspace
       - run:
-          name: Setup Environment Variables
+          name: check env var
           command: |
-            echo 'export AWS_ACCESS_KEY_ID="$AWS_ACCESS_KEY_ID"' >> $BASH_ENV
-            echo 'export AWS_SECRET_ACCESS_KEY="$AWS_SECRET_ACCESS_KEY"' >> $BASH_ENV
+            echo $DEPLOY_DB_HOST
+      - run:
+          name: Build models from database
+          command: sequelize-auto -h $DEPLOY_DB_HOST -d $DEPLOY_DB_DATABASE -u $DEPLOY_DB_USER -x $DEPLOY_DB_PASSWORD -p $DEPLOY_DB_PORT --dialect $DB_MACHINE -c ~/tmp/backend/src/config/dbconfig.json -o ~/tmp/backend/src/models
       - persist_to_workspace:
           root: .
           paths:
@@ -53,9 +63,9 @@ jobs:
       - run:
           name: Run stylelint
           command: yarn --cwd ~/tmp/backend stylelint
-      - run:
-          name: Run flow type check
-          command: yarn --cwd ~/tmp/backend flow
+      # - run:
+      #     name: Run flow type check
+      #     command: yarn --cwd ~/tmp/backend flow
   test:
     <<: *container_config
     steps:
@@ -67,16 +77,24 @@ jobs:
     <<: *container_config
     environment:
       RELEASE_CHANNEL: pull-request
+      NODE_ENV: development
     <<: *app_deploy
   deploy-app-staging:
     <<: *container_config
     environment:
-      RELEASE_CHANNEL: staging
+      RELEASE_CHANNEL: dev
+      NODE_ENV: staging
     <<: *app_deploy
   deploy-app-production:
     <<: *container_config
     environment:
-      RELEASE_CHANNEL: default
+      RELEASE_CHANNEL: prod
+      NODE_ENV: production
+      DEPLOY_DB_HOST: $DEPLOY_DB_HOST
+      DEPLOY_DB_DATABASE: $DEPLOY_DB_DATABASE
+      DEPLOY_DB_USER: $DEPLOY_DB_USER
+      DEPLOY_DB_PASSWORD: $DEPLOY_DB_PASSWORD
+      DEPLOY_DB_PORT: $DEPLOY_DB_PORT
     <<: *app_deploy
 
 workflows:
@@ -84,12 +102,17 @@ workflows:
   deploy:
     jobs:
       - checkout
+      - build_models:
+          requires:
+            - checkout
       - lint:
           requires:
             - checkout
+            - build_models
       - test:
           requires:
             - checkout
+            - build_models
       - approve-deploy-pull-request:
           type: approval
           filters:
@@ -105,21 +128,9 @@ workflows:
               ignore: master
       - deploy-app-staging:
           requires:
+            - build_models
             - lint
             - test
-          filters:
-            branches:
-              only: master
-      - approve-deploy:
-          type: approval
-          requires:
-            - deploy-app-staging
-          filters:
-            branches:
-              only: master
-      - deploy-app-production:
-          requires:
-            - approve-deploy
           filters:
             branches:
               only: master

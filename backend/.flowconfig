@@ -1,7 +1,7 @@
 [ignore]
-.*/Libraries/.*
 .*/node_modules/.*/tests/.*
 .*/node_modules/xdl/.*
+.*/models/.*
 
 [untyped]
 .*/node_modules/graphql/.*
@@ -46,4 +46,4 @@ suppress_comment=\\(.\\|\n\\)*\\$FlowFixedInNextDeploy
 suppress_comment=\\(.\\|\n\\)*\\$FlowExpectedError
 
 [version]
-^0.91.0
+^0.96.0

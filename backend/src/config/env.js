@@ -31,7 +31,7 @@ const ENV = {
 		AWS_ACCESS_KEY_ID,
 		AWS_SECRET_ACCESS_KEY,
 	},
-	production: {
+	staging: {
 		NODE_ENV,
 		DB_HOST: DEPLOY_DB_HOST,
 		DB_DATABASE: DEPLOY_DB_DATABASE,
@@ -48,7 +48,8 @@ const ENV = {
 
 function getEnvVars(env = '') {
 	if (env === 'production') return ENV.production
-	return ENV.development || ENV.staging
+	if (env === 'staging') return ENV.staging
+	return ENV.development
 }
 
 export default getEnvVars(process.env.NODE_ENV)

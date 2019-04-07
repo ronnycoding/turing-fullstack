@@ -1,8 +1,8 @@
 service: turing-backend
 plugins:
   - serverless-webpack
+  - serverless-offline-dotenv
   - serverless-offline
-  - serverless-dotenv-plugin
 custom:
   webpack:
     packager: yarn
@@ -20,17 +20,26 @@ provider:
   name: aws
   runtime: nodejs8.10
   stage: dev
-  region: eu-west-1
+  region: us-west-1
   vpc:
     securityGroupIds:
       - ${env:lambdaExecSecurityGroup}
     subnetIds:
       - ${env:subnetAPrivate}
       - ${env:subnetBPrivate}
-      - ${env:subnetCPrivate}
+      # - ${env:subnetCPrivate}
 functions:
   turing_graphql:
     handler: index.handler
+    environment:
+      NODE_ENV: ${env:NODE_ENV}
+      DB_MACHINE: ${env:DB_MACHINE}
+      DEPLOY_DB_DATABASE: ${env:DEPLOY_DB_DATABASE}
+      DEPLOY_DB_HOST: ${env:DEPLOY_DB_HOST}
+      DEPLOY_DB_PASSWORD: ${env:DEPLOY_DB_PASSWORD}
+      DEPLOY_DB_PORT: ${env:DEPLOY_DB_PORT}
+      DEPLOY_DB_USER: ${env:DEPLOY_DB_USER}
+      SECRET: ${env:SECRET}
     events:
       - http:
           path: graphql
