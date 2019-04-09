@@ -1,8 +1,8 @@
+import Sequelize from 'sequelize'
+
 import setModelsRelation from './relations'
 import getModels from './models'
 import ENV from './env'
-
-const Sequelize = require('sequelize')
 
 const database = ENV.DB_DATABASE
 const username = ENV.DB_USER
