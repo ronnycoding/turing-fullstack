@@ -77,13 +77,27 @@ jobs:
     <<: *container_config
     environment:
       RELEASE_CHANNEL: pull-request
-      NODE_ENV: development
+      NODE_ENV: production
+      DEPLOY_DB_HOST: $DEPLOY_DB_HOST
+      DEPLOY_DB_DATABASE: $DEPLOY_DB_DATABASE
+      DEPLOY_DB_USER: $DEPLOY_DB_USER
+      DEPLOY_DB_PASSWORD: $DEPLOY_DB_PASSWORD
+      DEPLOY_DB_PORT: $DEPLOY_DB_PORT
+      DB_MACHINE: $DB_MACHINE
+      SECRET: $SECRET
     <<: *app_deploy
   deploy-app-staging:
     <<: *container_config
     environment:
       RELEASE_CHANNEL: dev
-      NODE_ENV: staging
+      NODE_ENV: production
+      DEPLOY_DB_HOST: $DEPLOY_DB_HOST
+      DEPLOY_DB_DATABASE: $DEPLOY_DB_DATABASE
+      DEPLOY_DB_USER: $DEPLOY_DB_USER
+      DEPLOY_DB_PASSWORD: $DEPLOY_DB_PASSWORD
+      DEPLOY_DB_PORT: $DEPLOY_DB_PORT
+      DB_MACHINE: $DB_MACHINE
+      SECRET: $SECRET
     <<: *app_deploy
   deploy-app-production:
     <<: *container_config
@@ -95,6 +109,8 @@ jobs:
       DEPLOY_DB_USER: $DEPLOY_DB_USER
       DEPLOY_DB_PASSWORD: $DEPLOY_DB_PASSWORD
       DEPLOY_DB_PORT: $DEPLOY_DB_PORT
+      DB_MACHINE: $DB_MACHINE
+      SECRET: $SECRET
     <<: *app_deploy
 
 workflows:
