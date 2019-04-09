@@ -1,7 +1,8 @@
 service: turing-backend
 plugins:
   - serverless-webpack
-  - serverless-offline-dotenv
+  # - serverless-offline-dotenv
+  - serverless-dotenv-plugin
   - serverless-offline
 custom:
   webpack:
@@ -10,7 +11,6 @@ custom:
     includeModules:
       packagePath: ./package.json
       forceInclude:
-        - sequelize
         - mariadb
   serverless-offline:
     host: 0.0.0.0
@@ -32,14 +32,14 @@ functions:
   turing_graphql:
     handler: index.handler
     environment:
-      NODE_ENV: ${env:NODE_ENV}
       DB_MACHINE: ${env:DB_MACHINE}
-      DEPLOY_DB_DATABASE: ${env:DEPLOY_DB_DATABASE}
+      SECRET: ${env:SECRET}
       DEPLOY_DB_HOST: ${env:DEPLOY_DB_HOST}
+      DEPLOY_DB_DATABASE: ${env:DEPLOY_DB_DATABASE}
+      DEPLOY_DB_USER: ${env:DEPLOY_DB_USER}
       DEPLOY_DB_PASSWORD: ${env:DEPLOY_DB_PASSWORD}
       DEPLOY_DB_PORT: ${env:DEPLOY_DB_PORT}
-      DEPLOY_DB_USER: ${env:DEPLOY_DB_USER}
-      SECRET: ${env:SECRET}
+      NODE_ENV: staging
     events:
       - http:
           path: graphql

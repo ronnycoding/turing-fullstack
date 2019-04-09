@@ -15,14 +15,28 @@
 		"stylelint": "stylelint **/*.js"
 	},
 	"dependencies": {
+		"@babel/core": "^7.4.3",
+		"@babel/node": "^7.2.2",
+		"@babel/preset-env": "^7.4.3",
+		"@babel/preset-flow": "^7.0.0",
+		"@babel/register": "^7.4.0",
 		"apollo-server": "^2.4.8",
 		"apollo-server-express": "^2.4.8",
 		"apollo-server-lambda": "^2.4.8",
+		"babel-eslint": "^10.0.1",
+		"babel-loader": "^8.0.5",
 		"bcryptjs": "^2.4.3",
 		"body-parser": "^1.18.3",
 		"cors": "^2.8.5",
 		"dataloader": "^1.4.0",
 		"dotenv": "^7.0.0",
+		"eslint": "^5.16.0",
+		"eslint-config-airbnb": "^17.1.0",
+		"eslint-config-airbnb-base": "^13.1.0",
+		"eslint-plugin-flowtype": "^3.6.0",
+		"eslint-plugin-import": "^2.16.0",
+		"eslint-plugin-jsx-a11y": "^6.2.1",
+		"eslint-plugin-react": "^7.12.4",
 		"express": "^4.16.4",
 		"flow-cli": "^w0.0.0-pre",
 		"graphql": "^14.2.1",
@@ -38,29 +52,16 @@
 		"pg": "^7.9.0",
 		"sequelize": "^5.2.12",
 		"serverless": "^1.40.0",
+		"serverless-dotenv-plugin": "^2.0.1",
 		"serverless-http": "^1.9.1",
 		"serverless-offline": "^4.9.4",
+		"serverless-offline-dotenv": "^0.0.11",
 		"serverless-webpack": "^5.2.0",
-		"babel-eslint": "^10.0.1",
-		"eslint": "^5.16.0",
-		"webpack-node-externals": "^1.7.2",
-		"babel-loader": "^8.0.5",
-		"@babel/core": "^7.4.3",
-		"@babel/node": "^7.2.2",
-		"@babel/preset-env": "^7.4.3",
-		"@babel/preset-flow": "^7.0.0",
-		"@babel/register": "^7.4.0",
-		"eslint-config-airbnb": "^17.1.0",
-		"eslint-config-airbnb-base": "^13.1.0",
-		"eslint-plugin-flowtype": "^3.6.0",
-		"eslint-plugin-import": "^2.16.0",
-		"eslint-plugin-jsx-a11y": "^6.2.1",
-		"eslint-plugin-react": "^7.12.4",
 		"stylelint": "^9.8.0",
 		"stylelint-config-standard": "^18.2.0",
 		"stylelint-order": "^2.0.0",
-		"serverless-offline-dotenv": "^0.0.11",
-		"webpack": "^4.29.6"
+		"webpack": "^4.29.6",
+		"webpack-node-externals": "^1.7.2"
 	},
 	"devDependencies": {
 		"flow-bin": "^0.96.0",
@@ -77,6 +78,9 @@
 		}
 	},
 	"lint-staged": {
-		"*.js": ["eslint --fix", "git add"]
+		"*.js": [
+			"eslint --fix",
+			"git add"
+		]
 	}
 }
