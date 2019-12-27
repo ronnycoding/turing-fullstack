@@ -7,7 +7,7 @@ services:
     ports:
       - 3307:3306
     volumes:
-      - ./db-data/:/var/lib/mysql
+      - db_data:/var/lib/mysql
       - ./database/backup:/backup
     # labels:
     #   - 'traefik.enable=false'
@@ -46,3 +46,6 @@ services:
     #   - 'traefik.backend=backend-${DOMAIN}'
     #   - 'traefik.frontend.rule=Host:backend.${DOMAIN}.localhost'
     #   - 'traefik.port=80'
+
+volumes:
+  db_data: {}
